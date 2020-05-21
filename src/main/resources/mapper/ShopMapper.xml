@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.mapper.ShopMapper">
+  <resultMap id="BaseResultMap" type="shop.model.Shop">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shopname" jdbcType="VARCHAR" property="shopname" />
+    <result column="shopaddress" jdbcType="VARCHAR" property="shopaddress" />
+    <result column="shoptel" jdbcType="VARCHAR" property="shoptel" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shop
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="shop.model.Shop">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into shop (shopname, shopaddress, shoptel
+      )
+    values (#{shopname,jdbcType=VARCHAR}, #{shopaddress,jdbcType=VARCHAR}, #{shoptel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="shop.model.Shop">
+    update shop
+    set shopname = #{shopname,jdbcType=VARCHAR},
+      shopaddress = #{shopaddress,jdbcType=VARCHAR},
+      shoptel = #{shoptel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, shopname, shopaddress, shoptel
+    from shop
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, shopname, shopaddress, shoptel
+    from shop
+  </select>
+</mapper>
